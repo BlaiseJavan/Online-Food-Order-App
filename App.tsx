@@ -1,11 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import LandingScreen from "./src/screens/LandingScreen";
+import { LandingScreen } from "./src/screens/LandingScreen";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import HomeSreen from "./src/screens/HomeSreen";
+import { HomeScreen } from "./src/screens/HomeScreen";
+import { Provider } from "react-redux";
+import { store } from "./src/redux";
 
 const switchNavigator = createSwitchNavigator({
   landingStack: {
@@ -24,10 +26,18 @@ const switchNavigator = createSwitchNavigator({
   homeStack: createBottomTabNavigator({
     // HOme tab Icon
     home: {
-      screen: createStackNavigator({
-        HomePage: HomeSreen
-      }),
+      screen: createStackNavigator(
+        {
+          HomePage: HomeScreen
+        },
+        {
+          DefaulfNavigationOptions: {
+            HeaderShown: false
+          }
+        }
+      ),
       navigationOptions: {
+        HeaderShown: false,
         tabBarIcon: ({ focused, tintColor }) => {
           let icon =
             focused == true
@@ -40,7 +50,7 @@ const switchNavigator = createSwitchNavigator({
     // offer tab Icon
     Offer: {
       screen: createStackNavigator({
-        OfferPage: HomeSreen
+        OfferPage: HomeScreen
       }),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => {
@@ -55,7 +65,7 @@ const switchNavigator = createSwitchNavigator({
     // card tab Icon
     Cart: {
       screen: createStackNavigator({
-        CartPage: HomeSreen
+        CartPage: HomeScreen
       }),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => {
@@ -70,7 +80,7 @@ const switchNavigator = createSwitchNavigator({
     // account tab Icon
     Account: {
       screen: createStackNavigator({
-        AccountPage: HomeSreen
+        AccountPage: HomeScreen
       }),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => {
@@ -88,7 +98,11 @@ const switchNavigator = createSwitchNavigator({
 const AppNavigation = createAppContainer(switchNavigator);
 
 const App = () => {
-  return <AppNavigation />;
+  return (
+    <Provider store={store}>
+      <AppNavigation />
+    </Provider>
+  );
 };
 
 const styles = StyleSheet.create({

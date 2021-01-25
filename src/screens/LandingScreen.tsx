@@ -8,14 +8,20 @@ import {
   NavigationState
 } from "react-navigation";
 
+import { connect } from "react-redux";
+import { ApplicationState, onUpdateLacotion, UserState } from "../redux";
+
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+  userReducer: UserState;
+  onUpdateLacotion: Function;
 }
 
 // const { navigate } = useNavigation();
 const screenWidth = Dimensions.get("screen").width;
 
-const LandingSreen = (props: Props) => {
+const _LandingScreen = (props: Props) => {
+  const { navigation, onUpdateLacotion, userReducer } = props;
   const [errorMsg, setErrorMsg] = useState("");
   const [address, setAddress] = useState<Location.Address>();
   const [displayAddress, setDisplayAddress] = useState(
@@ -40,11 +46,12 @@ const LandingSreen = (props: Props) => {
         });
         for (let item of addressResponse) {
           setAddress(item);
+          onUpdateLacotion(item);
           let currentAddress = `${item.name}, ${item.street}, ${item.district}, ${item.country}`;
           setDisplayAddress(currentAddress);
           if (currentAddress.length > 0) {
             setTimeout(() => {
-              props.navigation.navigate("homeStack");
+              navigation.navigate("homeStack");
             }, 2000);
           }
           return;
@@ -114,4 +121,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LandingSreen;
+const mapToStateProps = (state: ApplicationState) => ({
+  userReducer: state.userReducers
+});
+
+const LandingScreen = connect(mapToStateProps, { onUpdateLacotion })(
+  _LandingScreen
+);
+export { LandingScreen };
