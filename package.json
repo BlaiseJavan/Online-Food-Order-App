@@ -8,7 +8,12 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "react-native-async-storage/async-storage",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "0.1.10",
+    "@types/react-redux": "^7.1.16",
+    "@types/redux-thunk": "^2.1.0",
+    "axios": "^0.21.1",
     "expo": "~40.0.0",
     "expo-location": "~8.2.1",
     "expo-status-bar": "~1.0.3",
@@ -22,7 +27,10 @@
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.10.2",
-    "react-navigation-tabs": "^2.10.1"
+    "react-navigation-tabs": "^2.10.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
